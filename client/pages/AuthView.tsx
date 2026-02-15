@@ -1,6 +1,6 @@
 
 import React, { useState, useEffect } from 'react';
-import { Plane, Mail, Lock, User as UserIcon, ArrowLeft, Loader2, ChevronRight, AlertCircle } from 'lucide-react';
+import { Plane, Mail, Lock, User as UserIcon, ArrowLeft, Loader2, ChevronRight, AlertCircle, Eye, EyeOff, ShieldCheck } from 'lucide-react';
 import { Page, User } from '../App';
 import { API } from '../api';
 
@@ -18,8 +18,11 @@ const AuthView: React.FC<AuthViewProps> = ({ initialMode, navigateTo, onAuthSucc
   const [formData, setFormData] = useState({
     name: '',
     email: '',
-    password: ''
+    password: '',
+    confirmPassword: ''
   });
+  const [showPassword, setShowPassword] = useState(false);
+  const [passwordStrength, setPasswordStrength] = useState(0);
 
   useEffect(() => {
     setIsSignUp(initialMode === 'signup');
@@ -32,8 +35,19 @@ const AuthView: React.FC<AuthViewProps> = ({ initialMode, navigateTo, onAuthSucc
     window.location.hash = !isSignUp ? 'signup' : 'login';
   };
 
+  const calculateStrength = (pass: string) => {
+    let strength = 0;
+    if (pass.length > 6) strength += 25;
+    if (pass.match(/[A-Z]/)) strength += 25;
+    if (pass.match(/[0-9]/)) strength += 25;
+    if (pass.match(/[^A-Za-z0-9]/)) strength += 25;
+    setPasswordStrength(strength);
+  };
+
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
+    const { name, value } = e.target;
+    setFormData({ ...formData, [name]: value });
+    if (name === 'password') calculateStrength(value);
     if (error) setError(null);
   };
 
@@ -44,10 +58,17 @@ const AuthView: React.FC<AuthViewProps> = ({ initialMode, navigateTo, onAuthSucc
     try {
       let result;
       if (isSignUp) {
-        // ২. MockAPI এর বদলে API ব্যবহার করুন
-        result = await API.signup(formData);
+        if (formData.password !== formData.confirmPassword) {
+          setError("Passwords do not match");
+          setLoading(false);
+          return;
+        }
+        result = await API.signup({
+          name: formData.name,
+          email: formData.email,
+          password: formData.password
+        });
       } else {
-        // ৩. এখানেও API ব্যবহার করুন
         result = await API.login({ email: formData.email, password: formData.password });
       }
       onAuthSuccess(result.user);
@@ -100,8 +121,22 @@ const AuthView: React.FC<AuthViewProps> = ({ initialMode, navigateTo, onAuthSucc
                 <Mail className="absolute right-0 top-4 w-4 h-4 text-gray-700" />
               </div>
               <div className="relative group">
-                <input name="password" type="password" value={formData.password} onChange={handleChange} placeholder="Password" className="w-full bg-transparent border-b border-white/10 py-4 text-white font-medium focus:outline-none focus:border-orange-500 transition-all" required />
-                <Lock className="absolute right-0 top-4 w-4 h-4 text-gray-700" />
+                <input 
+                  name="password" 
+                  type={showPassword ? "text" : "password"} 
+                  value={formData.password} 
+                  onChange={handleChange} 
+                  placeholder="Password" 
+                  className="w-full bg-transparent border-b border-white/10 py-4 text-white font-medium focus:outline-none focus:border-orange-500 transition-all pr-10" 
+                  required 
+                />
+                <button 
+                  type="button"
+                  onClick={() => setShowPassword(!showPassword)}
+                  className="absolute right-0 top-4 text-gray-700 hover:text-orange-500 transition-colors"
+                >
+                  {showPassword ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
+                </button>
               </div>
               <button type="submit" disabled={loading} className="w-full py-5 bg-orange-500 text-white font-black rounded-full transition-all uppercase tracking-[0.2em] text-[11px] flex items-center justify-center gap-2">
                 {loading ? <Loader2 className="w-4 h-4 animate-spin" /> : 'Sign In'}
@@ -139,9 +174,78 @@ const AuthView: React.FC<AuthViewProps> = ({ initialMode, navigateTo, onAuthSucc
                 <Mail className="absolute right-0 top-4 w-4 h-4 text-gray-700" />
               </div>
               <div className="relative group">
-                <input name="password" type="password" value={formData.password} onChange={handleChange} placeholder="Password" className="w-full bg-transparent border-b border-white/10 py-4 text-white font-medium focus:outline-none focus:border-orange-500 transition-all" required />
-                <Lock className="absolute right-0 top-4 w-4 h-4 text-gray-700" />
+                <input 
+                  name="password" 
+                  type={showPassword ? "text" : "password"} 
+                  value={formData.password} 
+                  onChange={handleChange} 
+                  placeholder="Password" 
+                  className="w-full bg-transparent border-b border-white/10 py-4 text-white font-medium focus:outline-none focus:border-orange-500 transition-all pr-10" 
+                  required 
+                />
+                <button 
+                  type="button"
+                  onClick={() => setShowPassword(!showPassword)}
+                  className="absolute right-0 top-4 text-gray-700 hover:text-orange-500 transition-colors"
+                >
+                  {showPassword ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
+                </button>
               </div>
+
+              {/* Password Strength Meter */}
+              {formData.password && (
+                <div className="space-y-2">
+                  <div className="flex justify-between items-center text-[9px] font-black uppercase tracking-widest">
+                    <span className="text-gray-500">Security Strength</span>
+                    <span className={
+                      passwordStrength <= 25 ? 'text-red-500' : 
+                      passwordStrength <= 50 ? 'text-orange-500' : 
+                      passwordStrength <= 75 ? 'text-yellow-500' : 'text-green-500'
+                    }>
+                      {passwordStrength <= 25 ? 'Weak' : 
+                       passwordStrength <= 50 ? 'Fair' : 
+                       passwordStrength <= 75 ? 'Good' : 'Strong'}
+                    </span>
+                  </div>
+                  <div className="h-1 w-full bg-white/5 rounded-full overflow-hidden">
+                    <div 
+                      className={`h-full transition-all duration-500 ${
+                        passwordStrength <= 25 ? 'bg-red-500' : 
+                        passwordStrength <= 50 ? 'bg-orange-500' : 
+                        passwordStrength <= 75 ? 'bg-yellow-500' : 'bg-green-500'
+                      }`}
+                      style={{ width: `${passwordStrength}%` }}
+                    />
+                  </div>
+                </div>
+              )}
+
+              <div className="relative group">
+                <input 
+                  name="confirmPassword" 
+                  type={showPassword ? "text" : "password"} 
+                  value={formData.confirmPassword} 
+                  onChange={handleChange} 
+                  placeholder="Confirm Password" 
+                  className={`w-full bg-transparent border-b py-4 text-white font-medium focus:outline-none transition-all ${
+                    formData.confirmPassword && formData.password !== formData.confirmPassword 
+                    ? 'border-red-500/50 focus:border-red-500' 
+                    : 'border-white/10 focus:border-orange-500'
+                  }`} 
+                  required 
+                />
+                <ShieldCheck className={`absolute right-0 top-4 w-4 h-4 ${
+                  formData.confirmPassword && formData.password === formData.confirmPassword 
+                  ? 'text-green-500' 
+                  : 'text-gray-700'
+                }`} />
+              </div>
+
+              {formData.confirmPassword && formData.password !== formData.confirmPassword && (
+                <p className="text-red-500 text-[9px] font-bold uppercase tracking-widest flex items-center gap-1">
+                  <AlertCircle className="w-3 h-3" /> Passwords do not match
+                </p>
+              )}
               <button type="submit" disabled={loading} className="w-full py-5 bg-orange-500 text-white font-black rounded-full transition-all uppercase tracking-[0.2em] text-[11px] flex items-center justify-center gap-2">
                 {loading ? <Loader2 className="w-4 h-4 animate-spin" /> : 'Sign Up'}
               </button>
