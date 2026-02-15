@@ -23,7 +23,8 @@ const getHeaders = () => {
 export const API = {
   // --- AUTHENTICATION ---
   signup: async (userData: { name: string; email: string; password: string }): Promise<{ token: string, user: User }> => {
-    const response = await fetch(`${API_URL}/auth/signup`, {
+    // '/auth/signup' এর বদলে '/api/auth/signup' যোগ করুন
+    const response = await fetch(`${API_URL}/api/auth/signup`, { 
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(userData),
@@ -37,7 +38,8 @@ export const API = {
   },
 
   login: async (credentials: { email: string; password: string }): Promise<{ token: string, user: User }> => {
-    const response = await fetch(`${API_URL}/auth/login`, {
+    // '/auth/login' এর বদলে '/api/auth/login' যোগ করুন
+    const response = await fetch(`${API_URL}/api/auth/login`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(credentials),

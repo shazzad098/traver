@@ -2,7 +2,7 @@
 import React, { useState, useEffect } from 'react';
 import { Plane, Mail, Lock, User as UserIcon, ArrowLeft, Loader2, ChevronRight, AlertCircle } from 'lucide-react';
 import { Page, User } from '../App';
-import { MockAPI } from '../api';
+import { API } from '../api';
 
 interface AuthViewProps {
   initialMode: 'login' | 'signup';
@@ -44,9 +44,11 @@ const AuthView: React.FC<AuthViewProps> = ({ initialMode, navigateTo, onAuthSucc
     try {
       let result;
       if (isSignUp) {
-        result = await MockAPI.signup(formData);
+        // ২. MockAPI এর বদলে API ব্যবহার করুন
+        result = await API.signup(formData); 
       } else {
-        result = await MockAPI.login({ email: formData.email, password: formData.password });
+        // ৩. এখানেও API ব্যবহার করুন
+        result = await API.login({ email: formData.email, password: formData.password });
       }
       onAuthSuccess(result.user);
     } catch (err: any) {
