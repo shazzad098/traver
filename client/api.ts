@@ -1,4 +1,3 @@
-
 import { User } from './App';
 
 const API_URL = 'https://traver-backend.onrender.com';
@@ -23,7 +22,6 @@ const getHeaders = () => {
 export const API = {
   // --- AUTHENTICATION ---
   signup: async (userData: { name: string; email: string; password: string }): Promise<{ token: string, user: User }> => {
-    // '/auth/signup' এর বদলে '/api/auth/signup' যোগ করুন
     const response = await fetch(`${API_URL}/api/auth/signup`, { 
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
@@ -38,7 +36,6 @@ export const API = {
   },
 
   login: async (credentials: { email: string; password: string }): Promise<{ token: string, user: User }> => {
-    // '/auth/login' এর বদলে '/api/auth/login' যোগ করুন
     const response = await fetch(`${API_URL}/api/auth/login`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
@@ -54,7 +51,7 @@ export const API = {
 
   // --- SAVED PLACES ---
   toggleSavePlace: async (userId: string, place: Destination): Promise<boolean> => {
-    const response = await fetch(`${API_URL}/user/saved-places`, {
+    const response = await fetch(`${API_URL}/api/user/saved-places`, {
       method: 'POST',
       headers: getHeaders(),
       body: JSON.stringify(place),
@@ -67,7 +64,7 @@ export const API = {
   },
 
   getSavedPlaces: async (userId: string): Promise<Destination[]> => {
-    const response = await fetch(`${API_URL}/user/saved-places`, {
+    const response = await fetch(`${API_URL}/api/user/saved-places`, {
       headers: getHeaders(),
     });
 
@@ -79,7 +76,7 @@ export const API = {
 
   // --- PROFILE UPDATE ---
   updateProfile: async (userId: string, updates: Partial<User>): Promise<User> => {
-    const response = await fetch(`${API_URL}/user/profile`, {
+    const response = await fetch(`${API_URL}/api/user/profile`, {
       method: 'PUT',
       headers: getHeaders(),
       body: JSON.stringify(updates),
@@ -93,7 +90,7 @@ export const API = {
 
   // --- BOOKINGS ---
   bookDestination: async (bookingData: any): Promise<any> => {
-    const response = await fetch(`${API_URL}/bookings`, {
+    const response = await fetch(`${API_URL}/api/bookings`, {
       method: 'POST',
       headers: getHeaders(),
       body: JSON.stringify(bookingData),
@@ -106,7 +103,7 @@ export const API = {
   },
 
   getMyBookings: async (): Promise<any[]> => {
-    const response = await fetch(`${API_URL}/bookings`, {
+    const response = await fetch(`${API_URL}/api/bookings`, {
       headers: getHeaders(),
     });
 
@@ -118,14 +115,14 @@ export const API = {
 
   // --- DESTINATIONS ---
   getAllDestinations: async (): Promise<any[]> => {
-    const response = await fetch(`${API_URL}/destinations`);
+    const response = await fetch(`${API_URL}/api/destinations`);
     const data = await response.json();
     if (!response.ok) throw new Error(data.message || 'Failed to fetch destinations');
     return data;
   },
 
   addDestination: async (destData: any): Promise<any> => {
-    const response = await fetch(`${API_URL}/destinations`, {
+    const response = await fetch(`${API_URL}/api/destinations`, {
       method: 'POST',
       headers: getHeaders(),
       body: JSON.stringify(destData),
@@ -137,7 +134,7 @@ export const API = {
 
   // --- ADMIN ---
   getAllUsers: async (): Promise<any[]> => {
-    const response = await fetch(`${API_URL}/admin/users`, {
+    const response = await fetch(`${API_URL}/api/admin/users`, {
       headers: getHeaders(),
     });
     const data = await response.json();
@@ -146,7 +143,7 @@ export const API = {
   },
 
   getAdminStats: async (): Promise<any> => {
-    const response = await fetch(`${API_URL}/admin/stats`, {
+    const response = await fetch(`${API_URL}/api/admin/stats`, {
       headers: getHeaders(),
     });
     const data = await response.json();
@@ -155,7 +152,7 @@ export const API = {
   },
 
   updateUserRole: async (userId: string, role: string): Promise<any> => {
-    const response = await fetch(`${API_URL}/admin/users/${userId}/role`, {
+    const response = await fetch(`${API_URL}/api/admin/users/${userId}/role`, {
       method: 'PUT',
       headers: getHeaders(),
       body: JSON.stringify({ role }),
@@ -167,7 +164,7 @@ export const API = {
 
   // --- SUPPORT ---
   submitSupport: async (supportData: any): Promise<any> => {
-    const response = await fetch(`${API_URL}/support`, {
+    const response = await fetch(`${API_URL}/api/support`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(supportData),
@@ -187,5 +184,4 @@ export const API = {
   }
 };
 
-// Keep MockAPI for compatibility if needed, but we'll use API
 export const MockAPI = API;
