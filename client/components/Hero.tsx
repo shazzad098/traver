@@ -114,7 +114,7 @@ const Hero: React.FC = () => {
         <div className="grid lg:grid-cols-2 gap-12 items-center h-full pt-24">
 
           {/* Main Content Area - Animations removed from text to satisfy user request */}
-          <div className="text-white max-w-xl">
+          <div className="text-white max-w-2xl">
             <div>
               <p className="text-sm font-bold tracking-[0.3em] uppercase text-orange-400 mb-4 drop-shadow-lg">
                 {currentDest.location}
@@ -122,7 +122,7 @@ const Hero: React.FC = () => {
             </div>
 
             <div className="overflow-hidden">
-              <h1 className="text-6xl lg:text-[7.5rem] font-black leading-[0.9] mb-8 font-heading drop-shadow-2xl">
+              <h1 className="text-5xl lg:text-7xl font-black leading-[0.9] mb-8 font-heading drop-shadow-2xl">
                 {currentDest.name}
               </h1>
             </div>
