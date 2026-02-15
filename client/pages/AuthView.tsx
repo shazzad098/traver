@@ -45,7 +45,7 @@ const AuthView: React.FC<AuthViewProps> = ({ initialMode, navigateTo, onAuthSucc
       let result;
       if (isSignUp) {
         // ২. MockAPI এর বদলে API ব্যবহার করুন
-        result = await API.signup(formData); 
+        result = await API.signup(formData);
       } else {
         // ৩. এখানেও API ব্যবহার করুন
         result = await API.login({ email: formData.email, password: formData.password });
@@ -59,13 +59,13 @@ const AuthView: React.FC<AuthViewProps> = ({ initialMode, navigateTo, onAuthSucc
   };
 
   return (
-    <div className="min-h-screen bg-[#050505] flex items-center justify-center p-6 font-sans overflow-hidden relative">
+    <div className="min-h-screen bg-[#050505] flex items-center justify-center p-4 md:p-6 font-sans overflow-hidden relative">
       <div className="absolute top-1/4 left-1/4 w-[600px] h-[600px] bg-orange-600/10 rounded-full blur-[140px] pointer-events-none"></div>
 
-      <div className="max-w-5xl w-full flex bg-black/40 backdrop-blur-3xl rounded-[3rem] shadow-[0_0_120px_rgba(249,115,22,0.1)] border border-white/5 overflow-hidden relative min-h-[650px]">
+      <div className="max-w-5xl w-full flex bg-black/40 backdrop-blur-3xl rounded-[2rem] md:rounded-[3rem] shadow-[0_0_120px_rgba(249,115,22,0.1)] border border-white/5 overflow-hidden relative min-h-fit md:min-h-[650px]">
 
         <div
-          className={`absolute top-0 w-1/2 h-full bg-gradient-to-br from-orange-400 via-orange-500 to-orange-600 z-30 flex flex-col items-center justify-center p-12 text-center transition-all duration-700 ease-[cubic-bezier(0.7,0,0.3,1)] ${isSignUp ? 'left-0' : 'left-1/2'
+          className={`hidden lg:flex absolute top-0 w-1/2 h-full bg-gradient-to-br from-orange-400 via-orange-500 to-orange-600 z-30 flex-col items-center justify-center p-12 text-center transition-all duration-700 ease-[cubic-bezier(0.7,0,0.3,1)] ${isSignUp ? 'left-0' : 'left-1/2'
             }`}
         >
           <div className="relative z-10">
@@ -84,7 +84,7 @@ const AuthView: React.FC<AuthViewProps> = ({ initialMode, navigateTo, onAuthSucc
         </div>
 
         <div className="w-full flex relative">
-          <div className={`w-1/2 p-12 lg:p-20 flex flex-col justify-center transition-all duration-700 ${isSignUp ? 'opacity-0 translate-x-10 pointer-events-none' : 'opacity-100 translate-x-0'}`}>
+          <div className={`w-full lg:w-1/2 p-10 md:p-12 lg:p-20 flex flex-col justify-center transition-all duration-700 ${isSignUp ? 'hidden lg:flex opacity-0 translate-x-10 pointer-events-none' : 'flex opacity-100 translate-x-0'}`}>
             <button onClick={() => navigateTo('home')} className="flex items-center gap-2 text-gray-500 font-black text-[10px] mb-12 hover:text-white transition-all uppercase tracking-widest"><ArrowLeft className="w-3.5 h-3.5" /> Back Home</button>
             <h1 className="text-4xl font-black text-white mb-10 font-heading">Sign In</h1>
 
@@ -107,9 +107,19 @@ const AuthView: React.FC<AuthViewProps> = ({ initialMode, navigateTo, onAuthSucc
                 {loading ? <Loader2 className="w-4 h-4 animate-spin" /> : 'Sign In'}
               </button>
             </form>
+
+            <div className="mt-10 pt-10 border-t border-white/5 text-center lg:hidden">
+              <p className="text-gray-500 text-[10px] font-bold uppercase tracking-widest mb-4">Don't have an account?</p>
+              <button
+                onClick={toggleMode}
+                className="px-10 py-3 bg-white/5 border border-white/10 text-white font-black rounded-full hover:bg-orange-500 hover:border-orange-500 transition-all uppercase tracking-[0.2em] text-[9px]"
+              >
+                Sign Up
+              </button>
+            </div>
           </div>
 
-          <div className={`w-1/2 p-12 lg:p-20 flex flex-col justify-center transition-all duration-700 ${isSignUp ? 'opacity-100 translate-x-0' : 'opacity-0 -translate-x-10 pointer-events-none'}`}>
+          <div className={`w-full lg:w-1/2 p-10 md:p-12 lg:p-20 flex flex-col justify-center transition-all duration-700 ${isSignUp ? 'flex opacity-100 translate-x-0' : 'hidden lg:flex opacity-0 -translate-x-10 pointer-events-none'}`}>
             <button onClick={() => navigateTo('home')} className="flex items-center gap-2 text-gray-500 font-black text-[10px] mb-12 hover:text-white transition-all uppercase tracking-widest"><ArrowLeft className="w-3.5 h-3.5" /> Back Home</button>
             <h1 className="text-4xl font-black text-white mb-10 font-heading">Create Account</h1>
 
@@ -136,6 +146,16 @@ const AuthView: React.FC<AuthViewProps> = ({ initialMode, navigateTo, onAuthSucc
                 {loading ? <Loader2 className="w-4 h-4 animate-spin" /> : 'Sign Up'}
               </button>
             </form>
+
+            <div className="mt-10 pt-10 border-t border-white/5 text-center lg:hidden">
+              <p className="text-gray-500 text-[10px] font-bold uppercase tracking-widest mb-4">Already have an account?</p>
+              <button
+                onClick={toggleMode}
+                className="px-10 py-3 bg-white/5 border border-white/10 text-white font-black rounded-full hover:bg-orange-500 hover:border-orange-500 transition-all uppercase tracking-[0.2em] text-[9px]"
+              >
+                Sign In
+              </button>
+            </div>
           </div>
         </div>
       </div>
