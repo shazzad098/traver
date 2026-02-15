@@ -1,7 +1,7 @@
 
 import { User } from './App';
 
-const API_URL = 'http://localhost:5000/api';
+const API_URL = 'https://traver-backend.onrender.com';
 
 export interface Destination {
   id: string;
