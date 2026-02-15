@@ -1,4 +1,3 @@
-
 import React, { useEffect, useState } from 'react';
 import { MapPin, Star, Calendar, Users, Heart, ArrowLeft, Share2, ShieldCheck, Coffee, Wifi, Car, Mountain, AlertCircle } from 'lucide-react';
 import { Destination } from '../api';
@@ -63,78 +62,79 @@ const DestinationDetailsView: React.FC<DestinationDetailsViewProps> = ({ destina
     };
 
     return (
-        <div className="animate-fade-in font-sans min-h-screen bg-gray-50 pb-20">
+        <div className="animate-fade-in font-sans min-h-screen bg-white pb-20">
             {/* Login Notification Pop-up */}
             {showNotification && (
-                <div className="fixed top-24 left-1/2 -translate-x-1/2 z-[200] animate-fade-in-up">
-                    <div className="bg-white border-2 border-orange-500 rounded-3xl p-6 shadow-[0_20px_50px_rgba(255,114,53,0.3)] flex items-center gap-4 min-w-[320px]">
-                        <div className="w-12 h-12 bg-orange-100 rounded-2xl flex items-center justify-center text-orange-500">
-                            <AlertCircle className="w-6 h-6 animate-pulse" />
+                <div className="fixed top-20 sm:top-24 left-1/2 -translate-x-1/2 z-[200] animate-fade-in-up px-4 w-full max-w-md">
+                    <div className="bg-white border-2 border-orange-500 rounded-2xl sm:rounded-3xl p-4 sm:p-6 shadow-[0_20px_50px_rgba(255,114,53,0.3)] flex items-center gap-3 sm:gap-4">
+                        <div className="w-10 h-10 sm:w-12 sm:h-12 bg-orange-100 rounded-xl sm:rounded-2xl flex items-center justify-center text-orange-500 flex-shrink-0">
+                            <AlertCircle className="w-5 h-5 sm:w-6 sm:h-6 animate-pulse" />
                         </div>
                         <div>
-                            <p className="text-gray-900 font-black uppercase tracking-widest text-[10px] mb-1">Attention Required</p>
-                            <p className="text-sm font-bold text-gray-600">Please login first to continue..</p>
+                            <p className="text-gray-900 font-black uppercase tracking-widest text-[9px] sm:text-[10px] mb-1">Attention Required</p>
+                            <p className="text-xs sm:text-sm font-bold text-gray-600">Please login first to continue..</p>
                         </div>
                     </div>
                 </div>
             )}
 
-            {/* Hero Header */}
-            <div className="relative h-[60vh] lg:h-[70vh] overflow-hidden">
+            {/* Hero Header - Starts from top */}
+            <div className="relative h-[50vh] sm:h-[60vh] lg:h-[70vh] overflow-hidden">
                 <img src={dest.image} alt={dest.name} className="w-full h-full object-cover" />
                 <div className="absolute inset-0 bg-gradient-to-b from-black/40 via-transparent to-black/60" />
 
                 {/* Top Actions */}
-                <div className="absolute top-8 left-0 right-0 px-6 lg:px-12 flex justify-between items-center z-20">
+                <div className="absolute top-4 sm:top-8 left-0 right-0 px-4 sm:px-6 lg:px-12 flex justify-between items-center z-20">
                     <button
                         onClick={onBack}
-                        className="p-4 rounded-3xl bg-white/20 backdrop-blur-md border border-white/20 text-white hover:bg-white/40 transition-all"
+                        className="p-3 sm:p-4 rounded-2xl sm:rounded-3xl bg-white/20 backdrop-blur-md border border-white/20 text-white hover:bg-white/40 transition-all"
                     >
-                        <ArrowLeft className="w-6 h-6" />
+                        <ArrowLeft className="w-5 h-5 sm:w-6 sm:h-6" />
                     </button>
-                    <div className="flex gap-4">
-                        <button className="p-4 rounded-3xl bg-white/20 backdrop-blur-md border border-white/20 text-white hover:bg-white/40 transition-all">
-                            <Share2 className="w-6 h-6" />
+                    <div className="flex gap-2 sm:gap-4">
+                        <button className="p-3 sm:p-4 rounded-2xl sm:rounded-3xl bg-white/20 backdrop-blur-md border border-white/20 text-white hover:bg-white/40 transition-all">
+                            <Share2 className="w-5 h-5 sm:w-6 sm:h-6" />
                         </button>
                         <button
                             onClick={() => onSavePlace(dest as any)}
-                            className={`p-4 rounded-3xl backdrop-blur-md border border-white/20 transition-all ${isSaved ? 'bg-orange-500 text-white border-orange-500' : 'bg-white/20 text-white hover:bg-white/40'}`}
+                            className={`p-3 sm:p-4 rounded-2xl sm:rounded-3xl backdrop-blur-md border border-white/20 transition-all ${isSaved ? 'bg-orange-500 text-white border-orange-500' : 'bg-white/20 text-white hover:bg-white/40'}`}
                         >
-                            <Heart className={`w-6 h-6 ${isSaved ? 'fill-current' : ''}`} />
+                            <Heart className={`w-5 h-5 sm:w-6 sm:h-6 ${isSaved ? 'fill-current' : ''}`} />
                         </button>
                     </div>
                 </div>
 
-                {/* Hero Title */}
-                <div className="absolute bottom-12 left-0 right-0 px-6 lg:px-12 z-20">
-                    <div className="flex items-center gap-2 mb-4">
-                        <span className="px-4 py-1.5 rounded-full bg-orange-500 text-white text-xs font-black uppercase tracking-widest whitespace-nowrap">
+                {/* Hero Title - Now inside image */}
+                <div className="absolute bottom-6 sm:bottom-8 left-0 right-0 px-4 sm:px-6 lg:px-12 z-20">
+                    <div className="flex items-center gap-2 mb-3 sm:mb-4 flex-wrap">
+                        <span className="px-3 sm:px-4 py-1 sm:py-1.5 rounded-full bg-orange-500 text-white text-[10px] sm:text-xs font-black uppercase tracking-widest whitespace-nowrap">
                             {dest.location.split(',')[1] || dest.location}
                         </span>
-                        <div className="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-white/20 backdrop-blur-md text-white text-xs font-bold">
-                            <Star className="w-4 h-4 fill-orange-400 text-orange-400 border-none" />
+                        <div className="flex items-center gap-1 sm:gap-1.5 px-2 sm:px-3 py-1 sm:py-1.5 rounded-full bg-white/20 backdrop-blur-md text-white text-[10px] sm:text-xs font-bold">
+                            <Star className="w-3 h-3 sm:w-4 sm:h-4 fill-orange-400 text-orange-400 border-none" />
                             {dest.rating}
                         </div>
                     </div>
-                    <h1 className="text-5xl lg:text-7xl font-black text-white font-heading drop-shadow-2xl">{dest.name}</h1>
-                    <p className="flex items-center gap-2 text-white/80 font-bold mt-4">
-                        <MapPin className="w-5 h-5 text-orange-400" /> {dest.location}
+                    <h1 className="text-2xl sm:text-4xl md:text-5xl lg:text-7xl font-black text-white font-heading drop-shadow-2xl leading-tight">{dest.name}</h1>
+                    <p className="flex items-center gap-2 text-white/80 font-bold mt-2 sm:mt-4 text-sm sm:text-base">
+                        <MapPin className="w-4 h-4 sm:w-5 sm:h-5 text-orange-400" /> {dest.location}
                     </p>
                 </div>
             </div>
 
-            <div className="max-w-7xl mx-auto px-6 lg:px-12 -mt-10 relative z-30">
-                <div className="grid lg:grid-cols-3 gap-12">
+            {/* Content section - positioned below image */}
+            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-12 mt-6 sm:mt-8 relative z-30">
+                <div className="grid lg:grid-cols-3 gap-6 sm:gap-8 lg:gap-12">
                     {/* Main Content */}
                     <div className="lg:col-span-2">
-                        <div className="bg-white rounded-[3.5rem] p-10 shadow-xl border border-gray-100">
+                        <div className="bg-white rounded-[1.5rem] sm:rounded-[2rem] md:rounded-[3.5rem] p-5 sm:p-6 md:p-10 shadow-xl">
                             {/* Tabs */}
-                            <div className="flex gap-8 border-b border-gray-100 mb-10 overflow-x-auto pb-2">
+                            <div className="flex gap-4 sm:gap-8 border-b border-gray-100 mb-6 sm:mb-10 overflow-x-auto pb-2 scrollbar-hide">
                                 {['Overview', 'Amenities', 'Reviews', 'Polices'].map((tab) => (
                                     <button
                                         key={tab}
                                         onClick={() => setActiveTab(tab)}
-                                        className={`text-sm font-black uppercase tracking-widest pb-4 transition-all relative whitespace-nowrap ${activeTab === tab ? 'text-gray-900 border-b-2 border-orange-500' : 'text-gray-400 hover:text-gray-600'}`}
+                                        className={`text-xs sm:text-sm font-black uppercase tracking-widest pb-3 sm:pb-4 transition-all relative whitespace-nowrap ${activeTab === tab ? 'text-gray-900 border-b-2 border-orange-500' : 'text-gray-400 hover:text-gray-600'}`}
                                     >
                                         {tab}
                                     </button>
@@ -142,40 +142,40 @@ const DestinationDetailsView: React.FC<DestinationDetailsViewProps> = ({ destina
                             </div>
 
                             {activeTab === 'Overview' && (
-                                <div className="space-y-10">
+                                <div className="space-y-6 sm:space-y-10">
                                     <div>
-                                        <h2 className="text-2xl font-black text-gray-900 mb-6 uppercase tracking-wider">About this place</h2>
-                                        <p className="text-gray-600 font-medium leading-[2] text-lg">
+                                        <h2 className="text-xl sm:text-2xl font-black text-gray-900 mb-4 sm:mb-6 uppercase tracking-wider">About this place</h2>
+                                        <p className="text-gray-600 font-medium leading-[1.7] sm:leading-[1.8] md:leading-[2] text-sm sm:text-base md:text-lg">
                                             {dest.desc} Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
                                         </p>
                                     </div>
 
-                                    <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
+                                    <div className="grid grid-cols-2 md:grid-cols-4 gap-4 sm:gap-6 md:gap-8">
                                         {[
                                             { icon: <Coffee />, label: 'Breakfast', value: 'Included' },
                                             { icon: <Wifi />, label: 'Wi-Fi', value: 'High Speed' },
                                             { icon: <Car />, label: 'Parking', value: 'Free' },
                                             { icon: <ShieldCheck />, label: 'Security', value: '24/7' },
                                         ].map((item, idx) => (
-                                            <div key={idx} className="bg-gray-50 rounded-3xl p-6 flex flex-col items-center text-center group hover:bg-orange-50 transition-colors">
-                                                <div className="text-orange-500 mb-4 transform group-hover:scale-110 transition-transform">{item.icon}</div>
-                                                <p className="text-xs font-black text-gray-400 uppercase tracking-widest mb-1">{item.label}</p>
-                                                <p className="text-sm font-bold text-gray-800">{item.value}</p>
+                                            <div key={idx} className="bg-gray-50 rounded-2xl sm:rounded-3xl p-4 sm:p-6 flex flex-col items-center text-center group hover:bg-orange-50 transition-colors">
+                                                <div className="text-orange-500 mb-3 sm:mb-4 transform group-hover:scale-110 transition-transform scale-90 sm:scale-100">{item.icon}</div>
+                                                <p className="text-[10px] sm:text-xs font-black text-gray-400 uppercase tracking-widest mb-1">{item.label}</p>
+                                                <p className="text-xs sm:text-sm font-bold text-gray-800">{item.value}</p>
                                             </div>
                                         ))}
                                     </div>
 
-                                    <div className="p-8 bg-orange-500 rounded-[2.5rem] text-white flex items-center justify-between">
-                                        <div className="flex items-center gap-6">
-                                            <div className="w-16 h-16 rounded-full bg-white/20 backdrop-blur-md flex items-center justify-center">
-                                                <Mountain className="w-8 h-8" />
+                                    <div className="p-5 sm:p-6 md:p-8 bg-orange-500 rounded-[1.5rem] sm:rounded-[2rem] md:rounded-[2.5rem] text-white flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 sm:gap-6">
+                                        <div className="flex items-center gap-4 sm:gap-6">
+                                            <div className="w-12 h-12 sm:w-16 sm:h-16 rounded-full bg-white/20 backdrop-blur-md flex items-center justify-center flex-shrink-0">
+                                                <Mountain className="w-6 h-6 sm:w-8 sm:h-8" />
                                             </div>
                                             <div>
-                                                <p className="text-sm font-black uppercase tracking-widest opacity-80">Local Guide</p>
-                                                <p className="text-xl font-black">Expert-led tours included</p>
+                                                <p className="text-[10px] sm:text-sm font-black uppercase tracking-widest opacity-80">Local Guide</p>
+                                                <p className="text-base sm:text-xl font-black">Expert-led tours included</p>
                                             </div>
                                         </div>
-                                        <button className="px-8 py-3 bg-white text-orange-500 font-black rounded-2xl hover:bg-gray-100 transition-colors uppercase tracking-widest text-xs">
+                                        <button className="px-6 sm:px-8 py-2.5 sm:py-3 bg-white text-orange-500 font-black rounded-xl sm:rounded-2xl hover:bg-gray-100 transition-colors uppercase tracking-widest text-[10px] sm:text-xs whitespace-nowrap">
                                             Learn More
                                         </button>
                                     </div>
@@ -186,26 +186,26 @@ const DestinationDetailsView: React.FC<DestinationDetailsViewProps> = ({ destina
 
                     {/* Booking Sidebar */}
                     <div className="lg:col-span-1">
-                        <div className="bg-white rounded-[3.5rem] p-10 shadow-xl border border-gray-100 sticky top-32">
-                            <div className="flex justify-between items-end mb-8">
+                        <div className="bg-white rounded-[1.5rem] sm:rounded-[2rem] md:rounded-[3.5rem] p-6 sm:p-8 md:p-10 shadow-xl lg:sticky lg:top-32">
+                            <div className="flex justify-between items-end mb-6 sm:mb-8">
                                 <div>
-                                    <p className="text-gray-400 font-black uppercase tracking-widest text-xs mb-1">Total Starting From</p>
-                                    <p className="text-4xl font-black text-gray-900">{dest.price}<span className="text-sm text-gray-400 font-bold ml-2">/ person</span></p>
+                                    <p className="text-gray-400 font-black uppercase tracking-widest text-[10px] sm:text-xs mb-1">Total Starting From</p>
+                                    <p className="text-3xl sm:text-4xl font-black text-gray-900">{dest.price}<span className="text-xs sm:text-sm text-gray-400 font-bold ml-2">/ person</span></p>
                                 </div>
                             </div>
 
-                            <div className="space-y-4 mb-8">
-                                <div className="p-5 bg-gray-50 rounded-3xl border border-gray-100">
-                                    <p className="text-xs font-black text-gray-400 uppercase tracking-widest mb-3">Dates</p>
-                                    <div className="flex items-center gap-3 text-gray-800 font-bold">
-                                        <Calendar className="w-5 h-5 text-orange-500" />
+                            <div className="space-y-3 sm:space-y-4 mb-6 sm:mb-8">
+                                <div className="p-4 sm:p-5 bg-gray-50 rounded-2xl sm:rounded-3xl">
+                                    <p className="text-[10px] sm:text-xs font-black text-gray-400 uppercase tracking-widest mb-2 sm:mb-3">Dates</p>
+                                    <div className="flex items-center gap-2 sm:gap-3 text-gray-800 font-bold text-sm sm:text-base">
+                                        <Calendar className="w-4 h-4 sm:w-5 sm:h-5 text-orange-500 flex-shrink-0" />
                                         <span>Jan 24 - Jan 31, 2024</span>
                                     </div>
                                 </div>
-                                <div className="p-5 bg-gray-50 rounded-3xl border border-gray-100">
-                                    <p className="text-xs font-black text-gray-400 uppercase tracking-widest mb-3">Guests</p>
-                                    <div className="flex items-center gap-3 text-gray-800 font-bold">
-                                        <Users className="w-5 h-5 text-orange-500" />
+                                <div className="p-4 sm:p-5 bg-gray-50 rounded-2xl sm:rounded-3xl">
+                                    <p className="text-[10px] sm:text-xs font-black text-gray-400 uppercase tracking-widest mb-2 sm:mb-3">Guests</p>
+                                    <div className="flex items-center gap-2 sm:gap-3 text-gray-800 font-bold text-sm sm:text-base">
+                                        <Users className="w-4 h-4 sm:w-5 sm:h-5 text-orange-500 flex-shrink-0" />
                                         <span>2 Persons</span>
                                     </div>
                                 </div>
@@ -213,13 +213,13 @@ const DestinationDetailsView: React.FC<DestinationDetailsViewProps> = ({ destina
 
                             <button
                                 onClick={handleBooking}
-                                className="w-full py-6 bg-gray-900 text-white font-black rounded-[2rem] hover:bg-orange-500 transition-all uppercase tracking-[0.2em] text-sm shadow-xl hover:shadow-orange-500/20 mb-6"
+                                className="w-full py-4 sm:py-6 bg-gray-900 text-white font-black rounded-[1.5rem] sm:rounded-[2rem] hover:bg-orange-500 transition-all uppercase tracking-[0.15em] sm:tracking-[0.2em] text-xs sm:text-sm shadow-xl hover:shadow-orange-500/20 mb-4 sm:mb-6"
                             >
                                 Book This Journey
                             </button>
 
-                            <p className="text-center text-gray-400 font-bold text-xs uppercase tracking-widest flex items-center justify-center gap-2">
-                                <ShieldCheck className="w-4 h-4" /> Best Price Guaranteed
+                            <p className="text-center text-gray-400 font-bold text-[10px] sm:text-xs uppercase tracking-widest flex items-center justify-center gap-2">
+                                <ShieldCheck className="w-3 h-3 sm:w-4 sm:h-4" /> Best Price Guaranteed
                             </p>
                         </div>
                     </div>
