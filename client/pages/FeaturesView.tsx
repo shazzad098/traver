@@ -42,10 +42,6 @@ const FeaturesView: React.FC = () => {
                 className="rounded-[4rem] shadow-2xl relative z-10 border-8 border-white" 
                 alt="Travel Features" 
               />
-              <div className="absolute -bottom-10 -right-10 bg-white p-8 rounded-[2.5rem] shadow-2xl border border-gray-100 z-20 animate-bounce-slow">
-                 <p className="text-3xl font-black text-orange-500 font-heading">50+</p>
-                 <p className="text-[10px] font-bold text-gray-400 uppercase tracking-widest">Exclusive Features</p>
-              </div>
             </div>
             <div className="animate-fade-in-up" style={{ animationDelay: '0.2s' }}>
               <span className="text-orange-500 font-bold tracking-widest text-sm uppercase mb-4 block">Unmatched Quality</span>
@@ -55,9 +51,6 @@ const FeaturesView: React.FC = () => {
               <p className="text-gray-500 text-lg mb-10 leading-relaxed font-medium">
                 We're not just a booking site. We're your travel partner. We provide the tools and support you need to make every journey a once-in-a-lifetime experience.
               </p>
-              <button className="px-10 py-4 bg-gray-900 text-white font-bold rounded-2xl hover:bg-orange-500 transition-all shadow-xl shadow-gray-200">
-                Download Feature List
-              </button>
             </div>
           </div>
         </div>
@@ -102,7 +95,7 @@ const FeaturesView: React.FC = () => {
             {allFeatures.map((f, i) => (
               <div 
                 key={i} 
-                className="bg-white p-10 rounded-[3.5rem] border border-gray-100 hover:shadow-2xl transition-all group animate-fade-in-up" 
+                className="bg-white p-10 rounded-[3.5rem] border border-gray-100 hover:shadow-2xl transition-all group animate-fade-in-up cursor-pointer" 
                 style={{ animationDelay: `${0.05 * i}s` }}
               >
                 <div className={`w-16 h-16 rounded-[1.5rem] flex items-center justify-center mb-8 ${f.color} group-hover:scale-110 transition-transform shadow-lg shadow-current/10`}>
@@ -166,7 +159,7 @@ const FeaturesView: React.FC = () => {
       </section>
 
       {/* CTA Section */}
-      <section className="pb-32 text-center">
+      <section className="pb-10 text-center">
          <div className="max-w-3xl mx-auto px-4">
             <h2 className="text-4xl font-black text-gray-900 mb-8 font-heading">Still Have Questions?</h2>
             <p className="text-gray-500 font-medium mb-12">Our travel specialists are ready to show you how Traver can change the way you see the world.</p>

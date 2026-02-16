@@ -86,19 +86,43 @@ const AuthView: React.FC<AuthViewProps> = ({ initialMode, navigateTo, onAuthSucc
       <div className="max-w-5xl w-full flex bg-black/40 backdrop-blur-3xl rounded-[2rem] md:rounded-[3rem] shadow-[0_0_120px_rgba(249,115,22,0.1)] border border-white/5 overflow-hidden relative min-h-fit md:min-h-[650px]">
 
         <div
-          className={`hidden lg:flex absolute top-0 w-1/2 h-full bg-gradient-to-br from-orange-400 via-orange-500 to-orange-600 z-30 flex-col items-center justify-center p-12 text-center transition-all duration-700 ease-[cubic-bezier(0.7,0,0.3,1)] ${isSignUp ? 'left-0' : 'left-1/2'
+          className={`hidden lg:flex absolute top-0 w-1/2 h-full z-30 flex-col items-center justify-center p-12 text-center transition-all duration-700 ease-[cubic-bezier(0.7,0,0.3,1)] overflow-hidden ${isSignUp ? 'left-0' : 'left-1/2'
             }`}
         >
-          <div className="relative z-10">
+          {/* Background Images with Overlay */}
+          <div className="absolute inset-0 z-0">
+            {/* Image for Sign Up State (Overlay is on Left, prompting Sign In) - Relaxing/Luxury Theme */}
+            <div
+              className={`absolute inset-0 bg-cover bg-center transition-opacity duration-700 ease-in-out ${isSignUp ? 'opacity-100 scale-110' : 'opacity-0 scale-100'}`}
+              style={{ backgroundImage: 'url("https://images.unsplash.com/photo-1542314831-068cd1dbfeeb?q=80&w=2670&auto=format&fit=crop")' }} // Luxury Hotel View
+            />
+
+            {/* Image for Sign In State (Overlay is on Right, prompting Sign Up) - Adventure Theme */}
+            <div
+              className={`absolute inset-0 bg-cover bg-center transition-opacity duration-700 ease-in-out ${!isSignUp ? 'opacity-100 scale-110' : 'opacity-0 scale-100'}`}
+              style={{ backgroundImage: 'url("https://images.unsplash.com/photo-1506929562872-bb421503ef21?q=80&w=2668&auto=format&fit=crop")' }} // Beach/Ocean View
+            />
+
+            {/* Functional Overlays */}
+            <div className="absolute inset-0 bg-gradient-to-br from-orange-600/50 to-orange-800/50 mix-blend-multiply transition-colors duration-700"></div>
+            <div className="absolute inset-0 bg-black/20"></div>
+          </div>
+
+          <div className="relative z-10 transition-all duration-700 delay-100">
             <div className="mb-8">
               <div className="w-20 h-20 bg-white/20 backdrop-blur-xl rounded-full flex items-center justify-center border border-white/30 mx-auto shadow-2xl">
                 <Plane className="w-10 h-10 text-white transform -rotate-45" />
               </div>
             </div>
-            <h2 className="text-4xl font-black text-white mb-6 font-heading uppercase tracking-tighter">
+            <h2 className="text-4xl font-black text-white mb-6 font-heading uppercase tracking-tighter drop-shadow-lg">
               {isSignUp ? 'Welcome Back!' : 'Start Your Journey!'}
             </h2>
-            <button onClick={toggleMode} className="px-14 py-4 bg-transparent border-2 border-white text-white font-black rounded-full hover:bg-white hover:text-orange-500 transition-all uppercase tracking-[0.2em] text-[10px]">
+            <p className="text-white/90 text-sm font-medium mb-10 max-w-xs mx-auto leading-relaxed drop-shadow-md">
+              {isSignUp
+                ? "Reconnect with your travel plans. Login to access your saved destinations."
+                : "Join our community of explorers. Create an account to start booking authentic experiences."}
+            </p>
+            <button onClick={toggleMode} className="px-14 py-4 bg-white/10 backdrop-blur-md border border-white/40 text-white font-black rounded-full hover:bg-white hover:text-orange-600 transition-all uppercase tracking-[0.2em] text-[10px] shadow-xl hover:shadow-2xl hover:scale-105 active:scale-95">
               {isSignUp ? 'Sign In' : 'Sign Up'}
             </button>
           </div>
@@ -121,16 +145,16 @@ const AuthView: React.FC<AuthViewProps> = ({ initialMode, navigateTo, onAuthSucc
                 <Mail className="absolute right-0 top-4 w-4 h-4 text-gray-700" />
               </div>
               <div className="relative group">
-                <input 
-                  name="password" 
-                  type={showPassword ? "text" : "password"} 
-                  value={formData.password} 
-                  onChange={handleChange} 
-                  placeholder="Password" 
-                  className="w-full bg-transparent border-b border-white/10 py-4 text-white font-medium focus:outline-none focus:border-orange-500 transition-all pr-10" 
-                  required 
+                <input
+                  name="password"
+                  type={showPassword ? "text" : "password"}
+                  value={formData.password}
+                  onChange={handleChange}
+                  placeholder="Password"
+                  className="w-full bg-transparent border-b border-white/10 py-4 text-white font-medium focus:outline-none focus:border-orange-500 transition-all pr-10"
+                  required
                 />
-                <button 
+                <button
                   type="button"
                   onClick={() => setShowPassword(!showPassword)}
                   className="absolute right-0 top-4 text-gray-700 hover:text-orange-500 transition-colors"
@@ -174,16 +198,16 @@ const AuthView: React.FC<AuthViewProps> = ({ initialMode, navigateTo, onAuthSucc
                 <Mail className="absolute right-0 top-4 w-4 h-4 text-gray-700" />
               </div>
               <div className="relative group">
-                <input 
-                  name="password" 
-                  type={showPassword ? "text" : "password"} 
-                  value={formData.password} 
-                  onChange={handleChange} 
-                  placeholder="Password" 
-                  className="w-full bg-transparent border-b border-white/10 py-4 text-white font-medium focus:outline-none focus:border-orange-500 transition-all pr-10" 
-                  required 
+                <input
+                  name="password"
+                  type={showPassword ? "text" : "password"}
+                  value={formData.password}
+                  onChange={handleChange}
+                  placeholder="Password"
+                  className="w-full bg-transparent border-b border-white/10 py-4 text-white font-medium focus:outline-none focus:border-orange-500 transition-all pr-10"
+                  required
                 />
-                <button 
+                <button
                   type="button"
                   onClick={() => setShowPassword(!showPassword)}
                   className="absolute right-0 top-4 text-gray-700 hover:text-orange-500 transition-colors"
@@ -198,22 +222,21 @@ const AuthView: React.FC<AuthViewProps> = ({ initialMode, navigateTo, onAuthSucc
                   <div className="flex justify-between items-center text-[9px] font-black uppercase tracking-widest">
                     <span className="text-gray-500">Security Strength</span>
                     <span className={
-                      passwordStrength <= 25 ? 'text-red-500' : 
-                      passwordStrength <= 50 ? 'text-orange-500' : 
-                      passwordStrength <= 75 ? 'text-yellow-500' : 'text-green-500'
+                      passwordStrength <= 25 ? 'text-red-500' :
+                        passwordStrength <= 50 ? 'text-orange-500' :
+                          passwordStrength <= 75 ? 'text-yellow-500' : 'text-green-500'
                     }>
-                      {passwordStrength <= 25 ? 'Weak' : 
-                       passwordStrength <= 50 ? 'Fair' : 
-                       passwordStrength <= 75 ? 'Good' : 'Strong'}
+                      {passwordStrength <= 25 ? 'Weak' :
+                        passwordStrength <= 50 ? 'Fair' :
+                          passwordStrength <= 75 ? 'Good' : 'Strong'}
                     </span>
                   </div>
                   <div className="h-1 w-full bg-white/5 rounded-full overflow-hidden">
-                    <div 
-                      className={`h-full transition-all duration-500 ${
-                        passwordStrength <= 25 ? 'bg-red-500' : 
-                        passwordStrength <= 50 ? 'bg-orange-500' : 
-                        passwordStrength <= 75 ? 'bg-yellow-500' : 'bg-green-500'
-                      }`}
+                    <div
+                      className={`h-full transition-all duration-500 ${passwordStrength <= 25 ? 'bg-red-500' :
+                        passwordStrength <= 50 ? 'bg-orange-500' :
+                          passwordStrength <= 75 ? 'bg-yellow-500' : 'bg-green-500'
+                        }`}
                       style={{ width: `${passwordStrength}%` }}
                     />
                   </div>
@@ -221,24 +244,22 @@ const AuthView: React.FC<AuthViewProps> = ({ initialMode, navigateTo, onAuthSucc
               )}
 
               <div className="relative group">
-                <input 
-                  name="confirmPassword" 
-                  type={showPassword ? "text" : "password"} 
-                  value={formData.confirmPassword} 
-                  onChange={handleChange} 
-                  placeholder="Confirm Password" 
-                  className={`w-full bg-transparent border-b py-4 text-white font-medium focus:outline-none transition-all ${
-                    formData.confirmPassword && formData.password !== formData.confirmPassword 
-                    ? 'border-red-500/50 focus:border-red-500' 
+                <input
+                  name="confirmPassword"
+                  type={showPassword ? "text" : "password"}
+                  value={formData.confirmPassword}
+                  onChange={handleChange}
+                  placeholder="Confirm Password"
+                  className={`w-full bg-transparent border-b py-4 text-white font-medium focus:outline-none transition-all ${formData.confirmPassword && formData.password !== formData.confirmPassword
+                    ? 'border-red-500/50 focus:border-red-500'
                     : 'border-white/10 focus:border-orange-500'
-                  }`} 
-                  required 
+                    }`}
+                  required
                 />
-                <ShieldCheck className={`absolute right-0 top-4 w-4 h-4 ${
-                  formData.confirmPassword && formData.password === formData.confirmPassword 
-                  ? 'text-green-500' 
+                <ShieldCheck className={`absolute right-0 top-4 w-4 h-4 ${formData.confirmPassword && formData.password === formData.confirmPassword
+                  ? 'text-green-500'
                   : 'text-gray-700'
-                }`} />
+                  }`} />
               </div>
 
               {formData.confirmPassword && formData.password !== formData.confirmPassword && (
